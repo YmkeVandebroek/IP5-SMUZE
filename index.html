@@ -18,20 +18,21 @@
 <body>
   <h1 id="videoTitle">Hier komt de titel</h1>
   <div id="app">
-      <div class="arama"></div>
+      <div class="search"></div>
         <form v-on:submit.prevent="searchVideos">
           <div class="ui-widget">
             <input id="youtube" type="text" placeholder="Search Video" v-model="search">
             <button id ="submit" type="submit">Search</button>
           </div>
         </form>
-        <div id="sonuc"></div>
+        <div id="result"></div>
           <youtube ref="youtube" :video-id="video_id" :player-vars="playerVars"></youtube>
           <nav>
               <button @click="playVideo">play</button>
               <button @click="pauseVideo">pause</button>
               <button @click="stopVideo">stop</button>
-              <button @click="setVolume">volume</button>
+              <input @mousemove="setVolume" type="range" name="volume" id="volume" value="">
+              <button value="addToPlayList">add to playlist</button>
           </nav>
   </div>
 </body>

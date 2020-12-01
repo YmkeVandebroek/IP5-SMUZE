@@ -6,7 +6,8 @@ var vm = new Vue({
 			search: null,
 			video_id: null,
 			playerVars: {
-				autoplay: 1
+				autoplay: 1,
+				controls: 0,
 			}
 		};
 	},
@@ -44,9 +45,10 @@ var vm = new Vue({
 			this.player.stopVideo()
 		},
 
-	/*	setVolume: function () {
-			this.player.setVolume(50)
-		}, */
+		setVolume: function () {
+			let volumeValue = document.getElementById("volume");
+			this.player.setVolume(volumeValue.value)
+		},
 
 	/*	getVideoTitle: function () {
 			let videoTitle = document.getElementById("videoTitle");
@@ -57,14 +59,14 @@ var vm = new Vue({
 });
 
 
-/* AutoComplete */
+/* Auto complete */
 $("#youtube").autocomplete({
     source: function(request, response){
-        /* google geliştirici kimliği (zorunlu değil) */
+        // API KEY
         var apiKey = 'AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg';
-        /* aranacak kelime */
+        // Search term
         var query = request.term;
-        /* youtube sorgusu */
+        /* YouTube search request */
         $.ajax({
             url: "https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+query+"&key="+apiKey+"&format=5&alt=json&callback=?",
             dataType: 'jsonp',
@@ -78,31 +80,29 @@ $("#youtube").autocomplete({
             }
         });
     },
-    /* seçilene işlem yapmak için burayı kullanabilirsin */
     select: function( event, ui ) {
         $.youtubeAPI(ui.item.label);
     }
 });
 
-/* De knop zoeken */
+// Button
 $('button#submit').click(function(){
     var value = $('input#youtube').val();
         $.youtubeAPI(value);
 });
 
-/* Youtube Arama Fonksiyonu */
+
+/* YouTube search request*/
 $.youtubeAPI = function(kelime){
-    var sonuc = $('#sonuc');
-    sonuc.html('Arama gerçekleştiriliyor...');
     $.ajax({
         type: 'GET',
         url: 'https://gdata.youtube.com/feeds/api/videos?q=' + kelime + '&max-results=15&v=2&alt=jsonc',
         dataType: 'jsonp',
         success: function( veri ){
             if( veri.data.items ){
-                sonuc.empty();
+                result.empty();
                 $.each( veri.data.items, function(i, data) {
-                    sonuc.append('<div class="youtube">\
+                    result.append('<div class="youtube">\
                         <img src="' + data.thumbnail.sqDefault + '" alt="" />\
                         <h3><a href="javascript:void(0)" onclick="$.youtubePlay(\'' + data.id + '\', \'' + data.content[5] + '\')">' + data.title + '</a></h3>\
                         <p>' + data.description + '</p>\
@@ -111,7 +111,7 @@ $.youtubeAPI = function(kelime){
                 });
             }
             else {
-                sonuc.html('<div class="hata"><strong>' + kelime + '</strong> ile ilgili hiç video bulunamadı!</div>');
+                result.html('<div class="hata"><strong>' + kelime + '</strong> ile ilgili hiç video bulunamadı!</div>');
             }
         }
     });
