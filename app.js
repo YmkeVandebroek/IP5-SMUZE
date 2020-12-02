@@ -1,139 +1,92 @@
-function loadNewVideo(){
-  player.loadVideoById("me91AGSVsyo");
-}
+// Test Lodash
+var array = ['a', 'b', 'c', 'd'];
+console.log(array);
+var pulled = _.pullAt(array, [1, 3]);
+
+console.log(array);
+// => ['a', 'c']
+
+console.log(pulled);
+// => ['b', 'd']
+
 
 var vm = new Vue({
 	el: '#app',
-
 	data: function () {
 		return {
 			search: null,
-			video_id: "zKmsZzJQJV0",
+			video_id: null/*'zKmsZzJQJV0'*/,
+			queue: [],
+			playing: [],
+			searchResults: [],
+			/*video_id: null,*/
 			playerVars: {
 				autoplay: 1,
 				controls: 0,
+				/*rel:1*/
 			}
 		};
 	},
-
 	computed: {
 		player() {
 			return this.$refs.youtube.player
 		}
 	},
-
 	methods: {
 		searchVideos: function() {
 			var self = this;
-
 			var search = encodeURI(this.search);
-			let result2 = document.getElementById("ytresult2");
-			//standaardvideo
-		/*	search = "me91AGSVsyo";*/
 			axios.get('https://vuetv.acmoore.co.uk/search/'+search).then(function (response) {
-				var first_result = response.data[0]; //Hier aanpassen voor meerder suggesties
-				var second_result = response.data[1];
-				self.loadVideo(first_result.video_id);
-				let resultFrame = document.getElementById("result")[0];
-					/*	function displayResults(){
-					result2.loadVideo = self.loadVideo(second_result.video_id);
+				var first_result = response.data[0];
+				/*self.loadVideo(first_result.video_id);*/
+				console.log(response.data);
+				self.searchResults = response.data;
+				for (var i = 0; i < response.data.length; i++) {
+					response.data[i]
+					console.log(response.data[i].image);
+					console.log(response.data[i].video_id);
+					console.log(response.data[i].title);
 				}
-				displayResults();*/
+
 			});
+			/* --------changes h1 to playing title
+			let videoTitle = document.getElementById("videoTitle");
+			let videoTitleRequest = (response.data[0].title);
+			videoTitle.innerHTML = videoTitleRequest;*/
 		},
-
-		loadVideo: function (video_id) {
-			this.player.loadVideoById(video_id);
-		},
-
-		playVideo: function () {
-			this.player.playVideo();
-		},
-
-		pauseVideo: function () {
-			this.player.pauseVideo();
-		},
-
-		stopVideo: function () {
-			this.player.stopVideo();
-		},
-
+		loadVideo: function (video_id) {this.player.loadVideoById(video_id);},
+		playVideo: function () {this.player.playVideo();},
+		pauseVideo: function () {this.player.pauseVideo();},
+		stopVideo: function () {this.player.stopVideo()},
 		setVolume: function () {
 			let volumeValue = document.getElementById("volume");
-			this.player.setVolume(volumeValue.value);
+			this.player.setVolume(volumeValue.value)
 		},
-
-	/*	requestTitle: function () {
-			this.player.getVideoData()["title"];
-			let titleArea = document.getElementById("title");
-			titleArea.innerHTML = currentTitle;
-			currentTitle.setVideoData()["title"];
-		},*/
-
-		/*cueVideo: function (video_id) {
-			this.player.cueVideoById(video_id, 0);
-		},*/
-
-
-
-	/*	getVideoTitle: function () {
-			let videoTitle = document.getElementById("videoTitle");
-			let title = snippet.title;
-			videoTitle.innerHTML= title.innerHTML;
-		}, */
+		addQueue:	function (video) {
+			this.queue.push(video);
+			console.log();
+		},
+		removeQueueVideo:	function (video) {
+		/*	this.queue.remove(video);*/
+			/*queue.remove();  //-> we moeten in de queue geraken*/
+			/*<button @click="removeQueue">remove queue</button>*/
+			console.log(queue);
+		},
 	}
 });
 
-/*function currentTitle(){
-	let self = this;
-	let player;
-	let currentTitle = document.getElementById("title").innerHTML = this.player.getVideoData()["title"];
-	console.log(currentTitle);
-}
+/*### [Search by keyword](/javascript/search.js)
 
-currentTitle();*/
-
-/*function createPlayList(){
-	{
-  "snippet": {
-    "title": "New playlist",
-    "description": "New playlist description"
-  },
-  "status": {
-    "privacyStatus": "private"
-  }
-}
-}*/
-
-/*
-// Import existing playlist
-var player;
-			  function onYouTubePlayerAPIReady() {
-			    player = new YT.Player('ytplayer', {
-			      height: 'auto',
-			      width: '100%',
-
-			      playerVars:{
-			      	enablejsapi: 1,
-              listType:'playlist',
-			      	list: 'PLDr_4M2flXJlRLzruodOncrsz33omi3zp', //put playlist ID HERE <-----------------
-			      	autoplay: 1,
-			        controls: 0,
-			        loop: 1,
-			        cc_load_policy: 1,	//this fails to work . . .
-			        cc_lang_pref: 'en',
-			        iv_load_policy: 3,
-			      }
-
-			    });
-			  }
-/*
+Method: youtube.search.list<br>
+Description: This code sample calls the API's <code>search.list</code> method to retrieve search results associated
+with a particular keyword. The HTML page uses JQuery, along with the <code>auth.js</code> and <code>search.js</code> JavaScript files, to show a simple search form and display the list of search results.*/
 
 /* Auto complete */
 $("#youtube").autocomplete({
     source: function(request, response){
         // API KEY
-        var apiKey = 'AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg';
+        //var apiKey = 'AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg';
+				var apiKey = 'AIzaSyAnalLPwbNqLXYOBCAKRHW_uyRL_vTYngU' // own api
         // Search term
         var query = request.term;
         /* YouTube search request */
@@ -154,24 +107,21 @@ $("#youtube").autocomplete({
         $.youtubeAPI(ui.item.label);
     }
 });
-
 // Button
 $('button#submit').click(function(){
     var value = $('input#youtube').val();
         $.youtubeAPI(value);
 });
-
-
 /* YouTube search request*/
-$.youtubeAPI = function(kelime){
+$.youtubeAPI = function(search){
     $.ajax({
         type: 'GET',
-        url: 'https://gdata.youtube.com/feeds/api/videos?q=' + kelime + '&max-results=15&v=2&alt=jsonc',
+        url: 'https://gdata.youtube.com/feeds/api/videos?q=' + search + '&max-results=5&v=2&alt=jsonc',
         dataType: 'jsonp',
-        success: function( veri ){
-            if( veri.data.items ){
-                result.empty();
-                $.each( veri.data.items, function(i, data) {
+        success: function( info ){
+            if( info.data.items ){
+					      result.empty();
+                $.each( info.data.items, function(i, data) {
                     result.append('<div class="youtube">\
                         <img src="' + data.thumbnail.sqDefault + '" alt="" />\
                         <h3><a href="javascript:void(0)" onclick="$.youtubePlay(\'' + data.id + '\', \'' + data.content[5] + '\')">' + data.title + '</a></h3>\
@@ -181,17 +131,28 @@ $.youtubeAPI = function(kelime){
                 });
             }
             else {
-                result.html('<div class="hata"><strong>' + kelime + '</strong> ile ilgili hiç video bulunamadı!</div>');
+                result.html('<div class="hata">' + search + '</div>');
             }
         }
     });
 }
 
-/*function resultsLoop(data) {
-        $.each(data.items, function (i, item) {
-            var thumb = item.snippet.thumbnails.medium.url;
-            var title = item.snippet.title;
-						console.log(title);
-        });
-				resultsLoop(data);
-    }*/
+
+/* -------------TEST CODE-----------------
+
+setInterval(function () {
+	console.log("logging");
+	console.log(data.discription[0]);
+	console.log(data);
+	console.log(discription);
+	console.log(info);
+	console.log(search);
+	console.log(info.data.items);
+}, 500);
+
+	getVideoTitle: function () {
+		let videoTitle = document.getElementById("videoTitle");
+		let title = snippet.title;
+		videoTitle.innerHTML= title.innerHTML;
+	},
+	*/

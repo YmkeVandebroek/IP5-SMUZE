@@ -6,6 +6,10 @@ form{
   margin-bottom: 2rem;
 }
 
+h1{
+  font-size: 3rem;
+}
+
 ul{
   background-color: lightgrey;
   display: block;
@@ -20,3 +24,28 @@ li{
 li:hover{
   background-color: red;
 }
+
+img{
+  width: 10vw;
+}
+
+#searchresults, #queue{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr ;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+
+
+
+/*ui-helper-hidden-accessible div{
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+ytp-button{
+  display: none;
+}
+ytp-button ytp-expand{
+  display: none;
+}*/
