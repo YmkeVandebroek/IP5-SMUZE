@@ -1,13 +1,4 @@
-// Test Lodash
-var array = ['a', 'b', 'c', 'd'];
-console.log(array);
-var pulled = _.pullAt(array, [1, 3]);
-
-console.log(array);
-// => ['a', 'c']
-
-console.log(pulled);
-// => ['b', 'd']
+/*const _ = require("lodash"); */
 
 
 var vm = new Vue({
@@ -35,18 +26,24 @@ var vm = new Vue({
 	methods: {
 		searchVideos: function() {
 			var self = this;
+			/*var queue = ;*/
 			var search = encodeURI(this.search);
 			axios.get('https://vuetv.acmoore.co.uk/search/'+search).then(function (response) {
 				var first_result = response.data[0];
-				/*self.loadVideo(first_result.video_id);*/
+				self.loadVideo(first_result.video_id);
 				console.log(response.data);
-				self.searchResults = response.data;
-				for (var i = 0; i < response.data.length; i++) {
+
+        self.searchResults = response.data;
+
+        /*for (var i = 0; i < response.data.length; i++) {
 					response.data[i]
 					console.log(response.data[i].image);
 					console.log(response.data[i].video_id);
 					console.log(response.data[i].title);
-				}
+
+				}*/
+				console.log('-----------------efkes iets anders---------')
+				console.log(response.data)
 
 			});
 			/* --------changes h1 to playing title
@@ -64,16 +61,45 @@ var vm = new Vue({
 		},
 		addQueue:	function (video) {
 			this.queue.push(video);
-			console.log();
+			console.log(video.video_id);
+
+			for (var i = 0; i < this.queue.length; i++) {
+				console.log(this.queue[i])
+			}
+			/*console.log(queue);*/
+
+			this.searchResults = []
 		},
-		removeQueueVideo:	function (video) {
-		/*	this.queue.remove(video);*/
-			/*queue.remove();  //-> we moeten in de queue geraken*/
+		removeQueue:	function (video) {
+			console.log("delete");
+			console.log(this.queue);
+
+
+			this.queue = _.reject(this.queue,
+				{ 'video_id': video.video_id});
+
+			/*_.reject(queue,
+				{ 'video_id': "Nskh_L0IHmc"}); */
+
+
+			/*_.reject(queue,
+					{ 'video_id': this.video_id});	*/
+
+
+			/*_.reject(queue, {
+				for (let i = 0; i < queue.length; i++) {
+					'video_id': queue[i].video_id
+
+				}
+			});*/
+			/*queue.remove();*/
+			/*this.queue.remove(this.video_id);
+			vue.delete(this.video)*/
 			/*<button @click="removeQueue">remove queue</button>*/
-			console.log(queue);
 		},
 	}
 });
+
 
 /*### [Search by keyword](/javascript/search.js)
 
@@ -81,7 +107,7 @@ Method: youtube.search.list<br>
 Description: This code sample calls the API's <code>search.list</code> method to retrieve search results associated
 with a particular keyword. The HTML page uses JQuery, along with the <code>auth.js</code> and <code>search.js</code> JavaScript files, to show a simple search form and display the list of search results.*/
 
-/* Auto complete */
+/* Auto complete
 $("#youtube").autocomplete({
     source: function(request, response){
         // API KEY
@@ -89,7 +115,7 @@ $("#youtube").autocomplete({
 				var apiKey = 'AIzaSyAnalLPwbNqLXYOBCAKRHW_uyRL_vTYngU' // own api
         // Search term
         var query = request.term;
-        /* YouTube search request */
+
         $.ajax({
             url: "https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+query+"&key="+apiKey+"&format=5&alt=json&callback=?",
             dataType: 'jsonp',
@@ -107,12 +133,14 @@ $("#youtube").autocomplete({
         $.youtubeAPI(ui.item.label);
     }
 });
+ */
+/*
 // Button
 $('button#submit').click(function(){
     var value = $('input#youtube').val();
         $.youtubeAPI(value);
 });
-/* YouTube search request*/
+// YouTube search request
 $.youtubeAPI = function(search){
     $.ajax({
         type: 'GET',
@@ -136,7 +164,7 @@ $.youtubeAPI = function(search){
         }
     });
 }
-
+*/
 
 /* -------------TEST CODE-----------------
 
@@ -156,3 +184,29 @@ setInterval(function () {
 		videoTitle.innerHTML= title.innerHTML;
 	},
 	*/
+
+let modeButton = document.getElementById("modebutton");
+modeButton.addEventListener("click", switchMode);
+modeButton.innerHTML="To light mode";
+modeButton.classList.add("dark");
+
+let styleSheet = document.getElementById("linkstyle");
+styleSheet.getAttribute("href");
+styleSheet.setAttribute("href", "dark.css");
+
+function switchMode(){
+	console.log("hello!");
+	if (modebutton.innerHTML==="To light mode") {
+		modeButton.innerHTML="To dark mode";
+		modeButton.classList.remove("dark");
+		modeButton.classList.add("light");
+		styleSheet.getAttribute("href");
+		styleSheet.setAttribute("href", "light.css");
+	} else if (modebutton.innerHTML==="To dark mode") {
+		modeButton.innerHTML="To light mode";
+		modeButton.classList.remove("light");
+		modeButton.classList.add("dark");
+		styleSheet.getAttribute("href");
+		styleSheet.setAttribute("href", "dark.css");
+	}
+}
