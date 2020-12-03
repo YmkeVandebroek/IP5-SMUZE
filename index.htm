@@ -34,7 +34,7 @@
                 <li v-for="video in searchResults">
                   <a href="#">
                       <img :src="video.image">
-                      {{ video.title }}
+                      <p>{{ video.title }}</p>
                   </a>
                   <button @click="addQueue(video)" type="button" >
                     <svg id="addbutton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs></defs><g id="Shopping_Cart" data-name="Shopping Cart"><circle class="cls-1" cx="23.07" cy="23.33" r="19"/><path class="cls-2" d="M22.17,15.79V30.87a.9.9,0,0,0,1.8,0V15.79a.9.9,0,0,0-1.8,0Z"/><path class="cls-2" d="M15.53,24.23H30.61a.9.9,0,0,0,0-1.8H15.53a.9.9,0,0,0,0,1.8Z"/></g></svg>
@@ -44,7 +44,7 @@
           </div>
         </form>
 
-        <h1 id="videoTitle">Hier komt de titel</h1>
+        <h1 id="videoTitle"></h1>
         <youtube ref="youtube" :video-id="video_id" v-on:ready="ready" v-on:playing="playing" v-on:ended="ended" :player-vars="playerVars"></youtube>
 
         <nav>
@@ -71,7 +71,7 @@
           <li v-for="video in queue">
             <a href="#">
                 <img :src="video.image">
-                {{ video.title }}
+                <p>{{ video.title }}</p>
             </a>
             <button @click="removeQueue(video)">
               <svg id="removebutton" id="Iconen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs></defs><circle class="cls-1" cx="23.5" cy="23.5" r="19"/><path class="cls-2" d="M16.65,18.35,29,30.66a1,1,0,0,0,1.47-1.47L18.12,16.88a1,1,0,0,0-1.47,1.47Z"/><path class="cls-2" d="M29,16.88,16.65,29.19a1,1,0,0,0,1.47,1.47L30.43,18.35A1,1,0,0,0,29,16.88Z"/></svg>
