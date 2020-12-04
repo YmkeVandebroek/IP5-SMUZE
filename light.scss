@@ -1,6 +1,6 @@
 @import "reset_plus.scss";
 
-$color-neutral-text: white;
+$color-neutral-text: #0c1329;
 $color-main: #f5dd47;
 $color-area: #3e5069;
 $color-accent: #0c1329;
@@ -142,7 +142,11 @@ nav{
 	h2{
 		margin-bottom: 2rem;
 		font-size: 2rem;
+    color: white;
 	}
+  p{
+    color: white;
+  }
 };
 
 button{

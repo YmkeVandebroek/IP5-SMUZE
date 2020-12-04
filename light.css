@@ -70,7 +70,7 @@ body {
   width: 90%;
   padding: 1rem;
   margin: auto;
-  color: white;
+  color: #0c1329;
   text-align: center;
   font-family: zen-new, sans-serif;
   font-weight: 700;
@@ -132,7 +132,7 @@ ul li {
     -ms-grid-rows: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     text-decoration: none;
-    color: white;
+    color: #0c1329;
     margin-bottom: 1rem; }
     ul li a img {
       width: 100%;
@@ -195,7 +195,10 @@ nav {
   padding: 1rem; }
   #queue h2 {
     margin-bottom: 2rem;
-    font-size: 2rem; }
+    font-size: 2rem;
+    color: white; }
+  #queue p {
+    color: white; }
 
 button {
   width: 4rem;
